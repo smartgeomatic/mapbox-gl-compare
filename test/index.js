@@ -18,7 +18,7 @@ test('Compare', function(t) {
     style: 'mapbox://styles/mapbox/dark-v8'
   });
 
-  new mapboxgl.Compare(a, b);
+  var compareControl = new mapboxgl.Compare(a, b);
 
   t.notOk(!!a.getContainer().style.clip, 'Map A is not clipped');
   t.ok(!!b.getContainer().style.clip, 'Map B is clipped');
@@ -38,6 +38,26 @@ test('Compare', function(t) {
   t.equals(a.getBearing(), 20, 'Bearing is synched');
   t.equals(a.getCenter().lng, -155, 'Lng is synched');
   t.equals(a.getCenter().lat, 16, 'Lat is synched');
+
+
+  compareControl.destroy();
+
+  b.jumpTo({
+    bearing: 0,
+    center: {
+      lat: 0,
+      lng:0 
+    },
+    pitch: 0,
+    zoom: 0 
+  });
+
+  t.equals(a.getZoom(), 3, 'Zoom is not synched after destroy');
+  t.equals(a.getPitch(), 20, 'Pitch is synched after destroy');
+  t.equals(a.getBearing(), 20, 'Bearing is synched after destroy');
+  t.equals(a.getCenter().lng, -155, 'Lng is synched after destroy');
+  t.equals(a.getCenter().lat, 16, 'Lat is synched after destroy');
+
   t.end();
 });
 

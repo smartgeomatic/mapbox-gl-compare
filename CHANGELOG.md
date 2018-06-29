@@ -1,3 +1,8 @@
+v0.2.0
+---
+
+- Added destroy method.
+
 v0.1.0
 ---
 

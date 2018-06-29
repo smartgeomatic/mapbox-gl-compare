@@ -20,9 +20,11 @@ var after = new mapboxgl.Map({
   style: 'mapbox://styles/mapbox/dark-v9'
 });
 
-new mapboxgl.Compare(before, after, {
+var compare = new mapboxgl.Compare(before, after, {
   mousemove: true // Optional. Set to true to enable swiping during cursor movement.
 });
+
+compare.destroy() //cleans listeners and remove swiper
 ```
 
 Demo: https://www.mapbox.com/mapbox-gl-js/example/mapbox-gl-compare/
@@ -44,14 +46,3 @@ Tests require an MapboxAccessToken env variable to be set.
 Lastly, run the test command from the console:
 
     npm test
-
-### Deploying
-
-- `npm run build`
-- Update the version key in [package.json](https://github.com/mapbox/mapbox-gl-compare/blob/master/package.json)
-- Update [CHANGELOG.md](https://github.com/mapbox/mapbox-gl-compare/blob/master/CHANGELOG.md)
-- Commit and push
-- `git tag -a vX.X.X -m 'vX.X.X'`
-- `git push --tags`
-- `npm publish`
-- Update version number in [GL JS example](https://github.com/mapbox/mapbox-gl-js/blob/mb-pages/docs/_posts/examples/3400-01-21-mapbox-gl-compare.html)

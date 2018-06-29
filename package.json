@@ -1,6 +1,6 @@
 {
-  "name": "mapbox-gl-compare",
-  "version": "0.1.0",
+  "name": "@smartgeomatic/mapbox-gl-compare",
+  "version": "0.2.0",
   "description": "Swipe and sync between two maps",
   "main": "index.js",
   "directories": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mapbox/mapbox-gl-compare.git"
+    "url": "git+https://github.com/smartgeomatic/mapbox-gl-compare.git"
   },
   "keywords": [
     "mapbox",
@@ -24,7 +24,7 @@
   "author": "Mapbox",
   "license": "ISC",
   "peerDependencies": {
-    "mapbox-gl": "0.26.0"
+    "mapbox-gl": "0.44.2"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
@@ -34,9 +34,10 @@
     "smokestack": "^3.4.1",
     "tap-status": "^1.0.1",
     "tape": "^4.4.0",
-    "uglify-js": "^2.6.1"
+    "uglify-js": "^2.6.1",
+    "mapbox-gl": "0.44.2"
   },
   "dependencies": {
-    "mapbox-gl-sync-move": "^0.1.0"
+    "@smartgeomatic/mapbox-gl-sync-move": "https://github.com/smartgeomatic/mapbox-gl-sync-move.git#v0.3.0"
   }
 }

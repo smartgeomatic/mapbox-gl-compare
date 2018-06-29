@@ -1,7 +1,7 @@
 'use strict';
 /* global mapboxgl */
 
-var syncMove = require('mapbox-gl-sync-move');
+var syncMove = require('@smartgeomatic/mapbox-gl-sync-move');
 
 function Compare(a, b, options) {
   this.options = options ? options : {};
@@ -19,15 +19,18 @@ function Compare(a, b, options) {
 
   a.getContainer().appendChild(this._container);
 
+  this._mainMap = a;
   this._clippedMap = b;
   this._bounds = b.getContainer().getBoundingClientRect();
   this._setPosition(this._bounds.width / 2);
-  syncMove(a, b);
+  this._clearSync = syncMove(a, b);
 
-  b.on('resize', function() {
+  this._onResize = function() {
     this._bounds = b.getContainer().getBoundingClientRect();
     if (this._x) this._setPosition(this._x);
-  }.bind(this));
+  }.bind(this);
+  
+  b.on('resize', this._onResize);
 
   if (this.options && this.options.mousemove) {
     a.getContainer().addEventListener('mousemove', this._onMove);
@@ -86,6 +89,26 @@ Compare.prototype = {
     if (x < 0) x = 0;
     if (x > this._bounds.width) x = this._bounds.width;
     return x;
+  },
+
+  destroy: function() {
+    this._clearSync();
+    this._clippedMap.off('resize', this._onResize);
+    var mainContainer = this._mainMap.getContainer();
+    
+    if (mainContainer) {
+      mainContainer .removeEventListener('mousemove', this._onMove);
+    }
+
+    var secondContainer = this._clippedMap.getContainer();
+
+    if (secondContainer) {
+      secondContainer.removeEventListener('mousemove', this._onMove);
+    }
+    
+    this._swiper.removeEventListener('mousedown', this._onDown);
+    this._swiper.removeEventListener('touchstart', this._onDown);
+    this._container.remove()
   }
 };
 
