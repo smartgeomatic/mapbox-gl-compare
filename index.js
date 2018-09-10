@@ -112,8 +112,4 @@ Compare.prototype = {
   }
 };
 
-if (window.mapboxgl) {
-  mapboxgl.Compare = Compare;
-} else if (typeof module !== 'undefined') {
-  module.exports = Compare;
-}
+module.exports = Compare;

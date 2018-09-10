@@ -1,14 +1,27 @@
 {
   "name": "@smartgeomatic/mapbox-gl-compare",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Swipe and sync between two maps",
   "main": "index.js",
+  "browerify": {
+    "transform": [
+      "envify",
+      "babelify"
+    ]
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  },
   "directories": {
     "example": "example"
   },
+  "publishConfig": {
+    "registry": "https://smartgeomatic.org/npm/"
+  },
   "scripts": {
     "start": "cp style.css example/style.css && budo example/index.js --serve example/bundle.js --dir example --live",
-    "build": "cp style.css dist/mapbox-gl-compare.css && NODE_ENV=production && browserify index.js | uglifyjs -c -m > dist/mapbox-gl-compare.js",
+    "build": "cp style.css dist/mapbox-gl-compare.css && NODE_ENV=production && browserify index.js --standalone MapboxCompare > dist/mapbox-gl-compare.js",
     "test": "npm run lint && browserify -t envify test/index.js | smokestack -b firefox | tap-status",
     "lint": "eslint --no-eslintrc -c .eslintrc index.js"
   },
@@ -21,21 +34,26 @@
     "mapboxgl",
     "ui"
   ],
-  "author": "Mapbox",
+  "author": "Mapbox, smartgeomatic",
   "license": "ISC",
   "peerDependencies": {
-    "mapbox-gl": "0.44.2"
+    "mapbox-gl": ">=0.27.0 <=0.50.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.2",
     "budo": "^8.0.4",
-    "envify": "^3.4.0",
-    "eslint": "^2.0.0",
+    "envify": "^4.1.0",
+    "eslint": "^5.5.0",
+    "mapbox-gl": "^0.48.0",
+    "nyc": "^13.0.1",
     "smokestack": "^3.4.1",
     "tap-status": "^1.0.1",
     "tape": "^4.4.0",
-    "uglify-js": "^2.6.1",
-    "mapbox-gl": "0.44.2"
+    "uglify-js": "^3.4.9"
   },
   "dependencies": {
     "@smartgeomatic/mapbox-gl-sync-move": "https://github.com/smartgeomatic/mapbox-gl-sync-move.git#v0.3.0"
